@@ -1,6 +1,7 @@
 package com.sqshq.akka.demo;
 
 import akka.actor.ActorSystem;
+import akka.cluster.Cluster;
 import com.sqshq.akka.demo.config.SpringExtension;
 import com.typesafe.config.ConfigFactory;
 import org.springframework.boot.SpringApplication;
@@ -15,9 +16,17 @@ public class Application {
 
     @Bean
     public ActorSystem actorSystem(ApplicationContext applicationContext) {
-        ActorSystem actorSystem = ActorSystem.create("robot-system", ConfigFactory.load());
-        SpringExtension.SpringExtProvider.get(actorSystem).initialize(applicationContext);
-        return actorSystem;
+
+        ActorSystem system = ActorSystem.create("robot-system", ConfigFactory.load());
+        SpringExtension.SpringExtProvider.get(system).initialize(applicationContext);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    Cluster cluster = Cluster.get(system);
+                    cluster.leave(cluster.selfAddress());
+                })
+        );
+
+        return system;
     }
 
     public static void main(String[] args) {
