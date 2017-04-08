@@ -1,0 +1,26 @@
+# Gradle working directory
+.gradle
+
+# Idea module files, project folder
+*.iml
+.idea/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Build output
+build
+target
+logs
+=======
+
+# Emacs files
+*~
+\#*
+.\#*
+
+# Log files
+*.log
+*.log.gz

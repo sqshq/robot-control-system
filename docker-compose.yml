@@ -1,0 +1,20 @@
+version: '2'
+services:
+  seed:
+    build: .
+    restart: always
+    ports:
+      - 2551:2551
+    environment:
+      HOST: seed
+      SEEDHOST: seed
+      PORT: 2551
+  one:
+    build: .
+    restart: always
+    ports:
+      - 2552:2552
+    environment:
+      HOST: ""
+      SEEDHOST: seed
+      PORT: 2552

@@ -1,0 +1,13 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  main:
+    web-environment: false
+logging:
+  level:
+    ROOT: warn
+    akka.cluster: info
+    com.sqshq: info
+server:
+  port: 8080
