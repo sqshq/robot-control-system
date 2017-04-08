@@ -26,17 +26,20 @@ repositories {
 
 ext {
     libs = [
-            spring: ['org.springframework.boot:spring-boot-starter-web',
-                     'org.springframework.boot:spring-boot-starter-websocket'],
-            akka  : ['com.typesafe.akka:akka-cluster_2.11:2.4.17',
-                     'com.typesafe.akka:akka-slf4j_2.11:2.4.17'],
-            test  : ['com.typesafe.akka:akka-testkit_2.11:2.4.17',
-                     'junit:junit:4.12']
+            spring    : ['org.springframework.boot:spring-boot-starter-web',
+                         'org.springframework.boot:spring-boot-starter-websocket'],
+            akka      : ['com.typesafe.akka:akka-cluster_2.11:2.4.17',
+                         'com.typesafe.akka:akka-slf4j_2.11:2.4.17'],
+            constructr: ['de.heikoseeberger:constructr_2.11:0.16.1',
+                         'de.heikoseeberger:constructr-coordination-etcd_2.11:0.16.1'],
+            test      : ['com.typesafe.akka:akka-testkit_2.11:2.4.17',
+                         'junit:junit:4.12']
     ]
 }
 
 dependencies {
     compile libs.spring
     compile libs.akka
+    compile libs.constructr
     testCompile libs.test
 }

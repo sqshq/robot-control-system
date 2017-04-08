@@ -1,20 +1,17 @@
-version: '2'
+version: '3'
 services:
+  etcd:
+    image: quay.io/coreos/etcd
+    ports:
+      - 2379:2379
+    environment:
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://localhost:2379
   seed:
     build: .
-    restart: always
-    ports:
-      - 2551:2551
-    environment:
-      HOST: seed
-      SEEDHOST: seed
-      PORT: 2551
-  one:
+    depends_on:
+      - etcd
+  node:
     build: .
-    restart: always
-    ports:
-      - 2552:2552
-    environment:
-      HOST: ""
-      SEEDHOST: seed
-      PORT: 2552
+    depends_on:
+      - etcd
