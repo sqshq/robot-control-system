@@ -3,7 +3,7 @@ spring:
     ansi:
       enabled: always
   main:
-    web-environment: false
+    web-environment: true
 logging:
   level:
     ROOT: warn

@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   etcd:
     image: quay.io/coreos/etcd
@@ -7,11 +7,21 @@ services:
     environment:
       ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
       ETCD_ADVERTISE_CLIENT_URLS: http://localhost:2379
-  seed:
+  receiver:
     build: .
     depends_on:
       - etcd
-  node:
+    ports:
+      - 8080:8080
+    environment:
+      AKKA_ROLE: receiver
+  processor:
     build: .
     depends_on:
       - etcd
+    environment:
+      AKKA_ROLE: processor
+#  transmitter:
+#    build: .
+#    depends_on:
+#      - etcd
