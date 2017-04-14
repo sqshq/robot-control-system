@@ -9,11 +9,15 @@ import org.springframework.context.ApplicationContext;
 
 public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringExt> {
 
-    public static SpringExtension SpringExtProvider = new SpringExtension();
+    private static SpringExtension instance = new SpringExtension();
 
     @Override
     public SpringExt createExtension(ExtendedActorSystem system) {
         return new SpringExt();
+    }
+
+    public static SpringExtension getInstance() {
+        return instance;
     }
 
     public static class SpringExt implements Extension {
@@ -24,11 +28,11 @@ public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringE
             SpringExt.applicationContext = applicationContext;
         }
 
-        public Props props(Class<? extends Actor> actorBeanClass) {
+        Props props(Class<? extends Actor> actorBeanClass) {
             return Props.create(SpringActorProducer.class, applicationContext, actorBeanClass);
         }
 
-        public Props props(Class<? extends Actor> actorBeanClass, Object... parameters) {
+        Props props(Class<? extends Actor> actorBeanClass, Object... parameters) {
             return Props.create(SpringActorProducer.class, applicationContext, actorBeanClass, parameters);
         }
     }

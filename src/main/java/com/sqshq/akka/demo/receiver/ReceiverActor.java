@@ -2,37 +2,55 @@ package com.sqshq.akka.demo.receiver;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import akka.japi.pf.ReceiveBuilder;
+import akka.cluster.pubsub.DistributedPubSub;
+import akka.cluster.pubsub.DistributedPubSubMediator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.async.DeferredResult;
 
-@Component
-@Scope("prototype")
+//@Actor
 public class ReceiverActor extends AbstractActor {
 
-    @Autowired
-    private ActorRef processorRouter;
-
     private final Logger log = LoggerFactory.getLogger(getClass());
+
     private final DeferredResult<Long> deferredResult;
 
-    public ReceiverActor(DeferredResult<Long> deferredResult) {
+    private final ActorRef mediator;
+    private final ActorRef router;
+
+    public ReceiverActor(DeferredResult<Long> deferredResult, ActorRef router) {
         this.deferredResult = deferredResult;
-        receive(ReceiveBuilder
+        this.router = router;
+
+//        List<String> path = singletonList("/user/processorRouter");
+//        AdaptiveLoadBalancingGroup routerGroup = new AdaptiveLoadBalancingGroup(MixMetricsSelector.getInstance(), path);
+//        ClusterRouterGroupSettings settings = new ClusterRouterGroupSettings(100, path, false, "processor");
+//        ClusterRouterGroup group = new ClusterRouterGroup(routerGroup, settings);
+//        router = getContext().actorOf(group.props(), "myservicetype-router");
+
+//        router = context().actorOf(
+//                new ClusterRouterGroup(new BroadcastGroup(path),
+//                        new ClusterRouterGroupSettings(100, path, false, "processor")).props(), "clusterProcessorRouter");
+
+        mediator = DistributedPubSub.get(
+                getContext().system()).mediator();
+    }
+
+    @Override
+    public Receive createReceive() {
+        return receiveBuilder()
                 .match(String.class, this::dispatch)
                 .match(Long.class, this::complete)
                 .matchAny(this::unhandled)
-                .build()
-        );
+                .build();
     }
 
     private void dispatch(String data) {
-        log.info("Received String message: {}", data);
-        processorRouter.tell(data, self());
+        log.info("Receiver: {}", data);
+
+        mediator.tell(new DistributedPubSubMediator.Publish("1", data), self());
+        router.tell(data, self());
+
         deferredResult.setResult(Long.MAX_VALUE);
     }
 
