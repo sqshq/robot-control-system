@@ -1,10 +1,9 @@
-package com.sqshq.akka.demo.config;
+package com.sqshq.akka.demo.config.spring;
 
 import akka.actor.Actor;
 import akka.actor.IndirectActorProducer;
 import org.springframework.context.ApplicationContext;
 
-//TODO investigate and refactor this peace of code
 public class SpringActorProducer implements IndirectActorProducer {
 
     private final ApplicationContext applicationContext;

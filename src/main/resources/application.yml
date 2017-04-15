@@ -2,12 +2,8 @@ spring:
   output:
     ansi:
       enabled: always
-  main:
-    web-environment: true
 logging:
   level:
     ROOT: warn
     akka.cluster: info
     com.sqshq: info
-server:
-  port: 8080

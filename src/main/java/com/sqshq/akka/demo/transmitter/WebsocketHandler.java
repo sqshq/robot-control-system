@@ -3,7 +3,7 @@ package com.sqshq.akka.demo.transmitter;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
-import com.sqshq.akka.demo.config.SpringProps;
+import com.sqshq.akka.demo.config.spring.SpringProps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info("new robot connected via websocket: {}", session.getId());
-        session.getAttributes().put("actor",
-                system.actorOf(SpringProps.create(system, RobotActor.class, session)));
+        session.getAttributes().put("actor", system.actorOf(
+                SpringProps.create(system, RobotActor.class, session)));
     }
 
     @Override

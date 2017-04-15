@@ -2,38 +2,30 @@ package com.sqshq.akka.demo.receiver;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import akka.cluster.pubsub.DistributedPubSub;
 import akka.cluster.pubsub.DistributedPubSubMediator;
+import com.sqshq.akka.demo.config.Actor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.request.async.DeferredResult;
 
-//@Actor
+@Actor
 public class ReceiverActor extends AbstractActor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-
     private final DeferredResult<Long> deferredResult;
 
-    private final ActorRef mediator;
-    private final ActorRef router;
+    @Autowired
+    @Qualifier("clusterProcessorRouter")
+    private ActorRef router;
 
-    public ReceiverActor(DeferredResult<Long> deferredResult, ActorRef router) {
+    @Autowired
+    @Qualifier("pubSubMediator")
+    private ActorRef mediator;
+
+    public ReceiverActor(DeferredResult<Long> deferredResult) {
         this.deferredResult = deferredResult;
-        this.router = router;
-
-//        List<String> path = singletonList("/user/processorRouter");
-//        AdaptiveLoadBalancingGroup routerGroup = new AdaptiveLoadBalancingGroup(MixMetricsSelector.getInstance(), path);
-//        ClusterRouterGroupSettings settings = new ClusterRouterGroupSettings(100, path, false, "processor");
-//        ClusterRouterGroup group = new ClusterRouterGroup(routerGroup, settings);
-//        router = getContext().actorOf(group.props(), "myservicetype-router");
-
-//        router = context().actorOf(
-//                new ClusterRouterGroup(new BroadcastGroup(path),
-//                        new ClusterRouterGroupSettings(100, path, false, "processor")).props(), "clusterProcessorRouter");
-
-        mediator = DistributedPubSub.get(
-                getContext().system()).mediator();
     }
 
     @Override
