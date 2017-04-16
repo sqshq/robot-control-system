@@ -71,6 +71,7 @@ public class Application {
     public ActorRef localProcessorRouter() {
         log.info("CREATING localProcessorRouter");
         return system.actorOf(SpringProps.create(system, ProcessorActor.class)
+                .withDispatcher("processor-dispatcher")
                 .withRouter(new RoundRobinPool(10)), "localProcessorRouter");
     }
 

@@ -17,8 +17,8 @@ public class Controller {
     private ActorSystem system;
 
     @RequestMapping(value = "/sensors/data", method = RequestMethod.POST)
-    private DeferredResult<Long> receiveSensorsData(@RequestBody String data) {
-        DeferredResult<Long> result = new DeferredResult<>();
+    private DeferredResult<Integer> receiveSensorsData(@RequestBody String data) {
+        DeferredResult<Integer> result = new DeferredResult<>();
         system.actorOf(SpringProps.create(system, ReceiverActor.class, result))
                 .tell(data, ActorRef.noSender());
         return result;

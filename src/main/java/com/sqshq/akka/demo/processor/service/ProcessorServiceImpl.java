@@ -1,16 +1,31 @@
 package com.sqshq.akka.demo.processor.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProcessorServiceImpl implements ProcessorService {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Override
-    public void compute() {
-        log.info("ProcessorService computed");
+    public Integer compute(Integer n) {
+        return nthPrime(n);
+    }
+
+    private int nthPrime(int n) {
+        int candidate, count;
+        for(candidate = 2, count = 0; count < n; ++candidate) {
+            if (isPrime(candidate)) {
+                ++count;
+            }
+        }
+        return candidate-1;
+    }
+
+    private boolean isPrime(int n) {
+        for(int i = 2; i < n; ++i) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
