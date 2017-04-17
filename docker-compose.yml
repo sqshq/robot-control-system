@@ -10,7 +10,7 @@ services:
       ETCD_ADVERTISE_CLIENT_URLS: http://localhost:2379
 
   receiver:
-    build: .
+    build: application
     depends_on:
       - etcd
     ports:
@@ -19,14 +19,14 @@ services:
       SPRING_PROFILES_ACTIVE: receiver
 
   processor:
-    build: .
+    build: application
     depends_on:
       - etcd
     environment:
       SPRING_PROFILES_ACTIVE: processor
 
   transmitter:
-    build: .
+    build: application
     depends_on:
       - etcd
     environment:

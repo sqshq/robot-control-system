@@ -35,7 +35,7 @@ public class ProcessorActor extends AbstractActor {
 
     private void process(Object data) {
         log.info("Processor: {}", data);
-        Integer computedValue = processorService.compute(random.nextInt(5000) + 5000);
+        Integer computedValue = processorService.compute(random.nextInt(1000) + 1000);
         mediator.tell(new DistributedPubSubMediator.Publish("1", data), self());
         sender().tell(computedValue, self());
     }

@@ -1,0 +1,19 @@
+plugins {
+    id "com.github.lkishalmi.gatling" version "0.4.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.12.1'
+}
+
+gatling {
+    simulations = {
+        include "**/*Simulation*"
+    }
+    toolVersion = "2.2.4"
+    logLevel = "INFO"
+}
