@@ -88,7 +88,7 @@ public class Application {
 
         @Override
         public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-            registry.addHandler(handler, "/").setAllowedOrigins("*");
+            registry.addHandler(handler, "/robots/socket").setAllowedOrigins("*");
         }
     }
 }

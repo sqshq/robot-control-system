@@ -11,20 +11,20 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
-
 @Actor
 public class RobotActor extends AbstractActor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final WebSocketSession session;
+    private final Long robotId;
 
-    public RobotActor(WebSocketSession session) {
+    public RobotActor(WebSocketSession session, Long robotId) {
         this.session = session;
-
+        this.robotId = robotId;
         DistributedPubSub.get(getContext().system())
                 .mediator()
                 .tell(new DistributedPubSubMediator.Subscribe(
-                        "1", getSelf()), getSelf());
+                        robotId.toString(), getSelf()), getSelf());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class RobotActor extends AbstractActor {
         return receiveBuilder()
                 .match(TextMessage.class, this::processMessageFromRobot)
                 .match(String.class, this::sendMessageToRobot)
-                .match(DistributedPubSubMediator.SubscribeAck.class, msg -> log.info("subscribing"))
+                .match(DistributedPubSubMediator.SubscribeAck.class, this::processSubscription)
                 .matchAny(this::unhandled)
                 .build();
     }
@@ -42,7 +42,11 @@ public class RobotActor extends AbstractActor {
     }
 
     private void sendMessageToRobot(String message) throws IOException {
-        log.info("send message to robot {}: {}", session.getId(), message);
+        log.info("send message to robot {}: {}", robotId, message);
         session.sendMessage(new TextMessage(message));
+    }
+
+    private void processSubscription(DistributedPubSubMediator.SubscribeAck ack) {
+        log.info("robot #{} sucessfully subscribed", robotId);
     }
 }

@@ -13,19 +13,22 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 @Component
 public class WebsocketHandler extends TextWebSocketHandler {
 
-    private Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final AtomicLong robotCount = new AtomicLong();
 
     @Autowired
     private ActorSystem system;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("new robot connected via websocket: {}", session.getId());
+        log.debug("new robot connected via websocket: {}", session.getId());
         session.getAttributes().put("actor", system.actorOf(
-                SpringProps.create(system, RobotActor.class, session)));
+                SpringProps.create(system, RobotActor.class, session, robotCount.incrementAndGet())));
     }
 
     @Override
@@ -36,7 +39,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info("robot {} disconnected from websocket", session.getId());
+        log.debug("robot {} has been disconnected from websocket", session.getId());
         ActorRef actor = (ActorRef) session.getAttributes().get("actor");
         actor.tell(message, ActorRef.noSender());
     }
