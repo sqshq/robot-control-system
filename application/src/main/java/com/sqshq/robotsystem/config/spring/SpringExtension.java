@@ -1,4 +1,4 @@
-package com.sqshq.akka.demo.config.spring;
+package com.sqshq.robotsystem.config.spring;
 
 import akka.actor.AbstractExtensionId;
 import akka.actor.Actor;

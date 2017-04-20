@@ -1,10 +1,10 @@
-package com.sqshq.akka.demo.processor;
+package com.sqshq.robotsystem.processor;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.cluster.pubsub.DistributedPubSubMediator;
-import com.sqshq.akka.demo.config.Actor;
-import com.sqshq.akka.demo.processor.service.ProcessorService;
+import com.sqshq.robotsystem.config.Actor;
+import com.sqshq.robotsystem.processor.service.ProcessorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

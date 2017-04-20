@@ -1,8 +1,8 @@
-package com.sqshq.akka.demo.receiver;
+package com.sqshq.robotsystem.receiver;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import com.sqshq.akka.demo.config.spring.SpringProps;
+import com.sqshq.robotsystem.config.spring.SpringProps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

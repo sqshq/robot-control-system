@@ -1,9 +1,9 @@
-package com.sqshq.akka.demo.transmitter;
+package com.sqshq.robotsystem.transmitter;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
-import com.sqshq.akka.demo.config.spring.SpringProps;
+import com.sqshq.robotsystem.config.spring.SpringProps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

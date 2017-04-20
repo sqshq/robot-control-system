@@ -1,4 +1,4 @@
-package com.sqshq.akka.demo.processor.service;
+package com.sqshq.robotsystem.processor.service;
 
 public interface ProcessorService {
 

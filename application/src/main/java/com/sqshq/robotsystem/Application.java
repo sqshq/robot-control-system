@@ -1,4 +1,4 @@
-package com.sqshq.akka.demo;
+package com.sqshq.robotsystem;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -9,10 +9,10 @@ import akka.cluster.pubsub.DistributedPubSub;
 import akka.cluster.routing.ClusterRouterGroup;
 import akka.cluster.routing.ClusterRouterGroupSettings;
 import akka.routing.RoundRobinPool;
-import com.sqshq.akka.demo.config.spring.SpringExtension;
-import com.sqshq.akka.demo.config.spring.SpringProps;
-import com.sqshq.akka.demo.processor.ProcessorActor;
-import com.sqshq.akka.demo.transmitter.WebsocketHandler;
+import com.sqshq.robotsystem.config.spring.SpringExtension;
+import com.sqshq.robotsystem.config.spring.SpringProps;
+import com.sqshq.robotsystem.processor.ProcessorActor;
+import com.sqshq.robotsystem.transmitter.WebsocketHandler;
 import com.typesafe.config.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class Application {
     @Bean
     public ActorSystem actorSystem(ApplicationContext context) {
 
-        ActorSystem system = ActorSystem.create("robot-system", ConfigFactory.load());
+        ActorSystem system = ActorSystem.create("robotsystem", ConfigFactory.load());
         SpringExtension.getInstance().get(system).initialize(context);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

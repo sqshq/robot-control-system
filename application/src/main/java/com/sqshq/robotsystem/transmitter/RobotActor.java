@@ -1,9 +1,9 @@
-package com.sqshq.akka.demo.transmitter;
+package com.sqshq.robotsystem.transmitter;
 
 import akka.actor.AbstractActor;
 import akka.cluster.pubsub.DistributedPubSub;
 import akka.cluster.pubsub.DistributedPubSubMediator;
-import com.sqshq.akka.demo.config.Actor;
+import com.sqshq.robotsystem.config.Actor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;

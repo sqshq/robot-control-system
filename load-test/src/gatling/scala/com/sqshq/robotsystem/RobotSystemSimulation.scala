@@ -1,4 +1,4 @@
-package com.sqshq.akka.demo
+package com.sqshq.robotsystem
 
 import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation

@@ -1,8 +1,8 @@
-package com.sqshq.akka.demo.receiver;
+package com.sqshq.robotsystem.receiver;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import com.sqshq.akka.demo.config.Actor;
+import com.sqshq.robotsystem.config.Actor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

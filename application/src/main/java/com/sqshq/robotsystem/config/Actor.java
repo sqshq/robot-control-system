@@ -1,4 +1,4 @@
-package com.sqshq.akka.demo.config;
+package com.sqshq.robotsystem.config;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
