@@ -31,7 +31,7 @@ public class RobotActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(TextMessage.class, this::processMessageFromRobot)
-                .match(String.class, this::sendMessageToRobot)
+                .match(Integer.class, this::sendDataToRobot)
                 .match(DistributedPubSubMediator.SubscribeAck.class, this::processSubscription)
                 .matchAny(this::unhandled)
                 .build();
@@ -41,9 +41,9 @@ public class RobotActor extends AbstractActor {
         log.info("received message from robot {}: {}", robotId, message);
     }
 
-    private void sendMessageToRobot(String message) throws IOException {
-        log.info("send message to robot {}: {}", robotId, message);
-        session.sendMessage(new TextMessage(message));
+    private void sendDataToRobot(Integer data) throws IOException {
+        log.info("send message to robot {}: {}", robotId, data);
+        session.sendMessage(new TextMessage(data.toString()));
     }
 
     private void processSubscription(DistributedPubSubMediator.SubscribeAck ack) {
