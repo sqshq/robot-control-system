@@ -14,8 +14,6 @@ import com.sqshq.robotsystem.config.spring.SpringProps;
 import com.sqshq.robotsystem.processor.ProcessorActor;
 import com.sqshq.robotsystem.transmitter.WebsocketHandler;
 import com.typesafe.config.ConfigFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,8 +33,6 @@ public class Application {
 
     @Autowired
     private ActorSystem system;
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -60,7 +56,6 @@ public class Application {
     @Bean("clusterProcessorRouter")
     @Profile("receiver")
     public ActorRef clusterProcessorRouter() {
-        log.info("CREATING clusterProcessorRouter");
         List<String> path = singletonList("/user/localProcessorRouter");
         return system.actorOf(new ClusterRouterGroup(new AdaptiveLoadBalancingGroup(MixMetricsSelector.getInstance(), path),
                         new ClusterRouterGroupSettings(100, path, false, "processor")).props(), "clusterProcessorRouter");
@@ -69,7 +64,6 @@ public class Application {
     @Bean("localProcessorRouter")
     @Profile("processor")
     public ActorRef localProcessorRouter() {
-        log.info("CREATING localProcessorRouter");
         return system.actorOf(SpringProps.create(system, ProcessorActor.class)
                 .withDispatcher("processor-dispatcher")
                 .withRouter(new RoundRobinPool(10)), "localProcessorRouter");
@@ -81,6 +75,7 @@ public class Application {
     }
 
     @EnableWebSocket
+    @Profile("transmitter")
     public class WebSocketConfiguration implements WebSocketConfigurer {
 
         @Autowired

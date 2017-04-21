@@ -34,7 +34,7 @@ public class ReceiverActor extends AbstractActor {
 
     private void dispatch(String data) {
         log.info("Receiver: {}", data);
-        router.tell(data, self());
+        router.tell(Integer.valueOf(data), self());
     }
 
     private void complete(Integer result) {

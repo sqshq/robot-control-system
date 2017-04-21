@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @RestController
-public class Controller {
+public class ReceiverController {
 
     @Autowired
     private ActorSystem system;

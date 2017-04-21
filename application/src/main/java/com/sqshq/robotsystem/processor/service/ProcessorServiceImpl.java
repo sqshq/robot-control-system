@@ -2,11 +2,14 @@ package com.sqshq.robotsystem.processor.service;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * Dummy CPU-intensive task, just calculates N-th prime number
+ */
 @Service
 public class ProcessorServiceImpl implements ProcessorService {
 
     @Override
-    public Integer compute(Integer n) {
+    public int compute(int n) {
         return nthPrime(n);
     }
 

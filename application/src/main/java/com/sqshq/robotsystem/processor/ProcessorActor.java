@@ -19,24 +19,28 @@ public class ProcessorActor extends AbstractActor {
     private final Random random = new Random();
 
     @Autowired
-    @Qualifier("pubSubMediator")
-    private ActorRef mediator;
+    private ProcessorService processorService;
 
     @Autowired
-    private ProcessorService processorService;
+    @Qualifier("pubSubMediator")
+    private ActorRef mediator;
 
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match(String.class, this::process)
+                .match(Integer.class, this::process)
                 .matchAny(this::unhandled)
                 .build();
     }
 
-    private void process(Object data) {
-        log.info("Processor: {}", data);
-        Integer computedValue = processorService.compute(random.nextInt(1000) + 2000);
-        mediator.tell(new DistributedPubSubMediator.Publish("1", data), self());
-        sender().tell(computedValue, self());
+    private void process(Integer sensorData) {
+        log.info("Processor : {}", sensorData);
+
+        int computedValue = processorService.compute(sensorData);
+        int targetRobot = random.nextInt(100);
+
+        log.info("Routing processed value to robot #{}", targetRobot);
+        mediator.tell(new DistributedPubSubMediator.Publish(String.valueOf(targetRobot), computedValue), self());
+        sender().tell(targetRobot, self());
     }
 }

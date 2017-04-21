@@ -38,7 +38,7 @@ public class RobotActor extends AbstractActor {
     }
 
     private void processMessageFromRobot(TextMessage message) {
-        log.info("received message from robot {}: {}", session.getId(), message);
+        log.info("received message from robot {}: {}", robotId, message);
     }
 
     private void sendMessageToRobot(String message) throws IOException {
