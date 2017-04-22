@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.cluster.Cluster;
 import akka.cluster.metrics.AdaptiveLoadBalancingGroup;
-import akka.cluster.metrics.MixMetricsSelector;
+import akka.cluster.metrics.CpuMetricsSelector;
 import akka.cluster.pubsub.DistributedPubSub;
 import akka.cluster.routing.ClusterRouterGroup;
 import akka.cluster.routing.ClusterRouterGroupSettings;
@@ -57,7 +57,7 @@ public class Application {
     @Profile("receiver")
     public ActorRef clusterProcessorRouter() {
         List<String> path = singletonList("/user/localProcessorRouter");
-        return system.actorOf(new ClusterRouterGroup(new AdaptiveLoadBalancingGroup(MixMetricsSelector.getInstance(), path),
+        return system.actorOf(new ClusterRouterGroup(new AdaptiveLoadBalancingGroup(CpuMetricsSelector.getInstance(), path),
                         new ClusterRouterGroupSettings(100, path, false, "processor")).props(), "clusterProcessorRouter");
     }
 
