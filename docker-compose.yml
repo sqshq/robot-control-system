@@ -17,6 +17,7 @@ services:
       - 10000:8080
     environment:
       SPRING_PROFILES_ACTIVE: receiver
+      WEB_ENVIRONMENT: 'true'
 
   processor:
     build: application
@@ -24,6 +25,8 @@ services:
       - etcd
     environment:
       SPRING_PROFILES_ACTIVE: processor
+      WEB_ENVIRONMENT: 'false'
+      ROBOTS_COUNT: 1
 
   transmitter:
     build: application
@@ -31,5 +34,6 @@ services:
       - etcd
     environment:
       SPRING_PROFILES_ACTIVE: transmitter
+      WEB_ENVIRONMENT: 'true'
     ports:
       - 20000:8080

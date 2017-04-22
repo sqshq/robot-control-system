@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Random;
 
@@ -17,6 +18,9 @@ public class ProcessorActor extends AbstractActor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final Random random = new Random();
+
+    @Value("${robots.count}")
+    private Integer robotsCount;
 
     @Autowired
     private ProcessorService processorService;
@@ -34,12 +38,11 @@ public class ProcessorActor extends AbstractActor {
     }
 
     private void process(Integer sensorData) {
-        log.info("Processor : {}", sensorData);
+        log.info("processor working on data: {}", sensorData);
 
         int computedValue = processorService.compute(sensorData);
-        int targetRobot = random.nextInt(100);
+        int targetRobot = random.nextInt(robotsCount) + 1;
 
-        log.info("Routing processed value to robot #{}", targetRobot);
         mediator.tell(new DistributedPubSubMediator.Publish(String.valueOf(targetRobot), computedValue), self());
         sender().tell(targetRobot, self());
     }

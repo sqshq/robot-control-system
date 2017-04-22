@@ -33,11 +33,12 @@ public class ReceiverActor extends AbstractActor {
     }
 
     private void dispatch(String data) {
-        log.info("Receiver: {}", data);
+        log.info("receiver dispatching the data: {}", data);
         router.tell(Integer.valueOf(data), self());
     }
 
     private void complete(Integer result) {
+        log.info("receiver responding to sender: {}", result);
         deferredResult.setResult(result);
     }
 }

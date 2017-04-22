@@ -2,8 +2,12 @@ spring:
   output:
     ansi:
       enabled: always
+  main:
+    web-environment: ${WEB_ENVIRONMENT}
 logging:
   level:
     ROOT: warn
     akka.cluster: info
     com.sqshq: info
+robots:
+    count: ${ROBOTS_COUNT}

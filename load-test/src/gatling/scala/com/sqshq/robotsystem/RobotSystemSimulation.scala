@@ -29,8 +29,8 @@ class RobotSystemSimulation extends Simulation {
          .inject(rampUsers(100).over(5 seconds))
          .protocols(http),
       sensorDataScenario
-         .inject(atOnceUsers(100))
-         .throttle(reachRps(150).in(5 seconds), holdFor(30 seconds))
+         .inject(atOnceUsers(300))
+         .throttle(reachRps(300).in(5 seconds), holdFor(30 seconds))
          .protocols(http)
    )
 }

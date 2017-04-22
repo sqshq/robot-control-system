@@ -42,7 +42,7 @@ public class RobotActor extends AbstractActor {
     }
 
     private void sendDataToRobot(Integer data) throws IOException {
-        log.info("send message to robot {}: {}", robotId, data);
+        log.info("sending message to robot {}: {}", robotId, data);
         session.sendMessage(new TextMessage(data.toString()));
     }
 
