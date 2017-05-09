@@ -3,7 +3,7 @@ package com.sqshq.robotsystem.processor.service;
 import org.springframework.stereotype.Service;
 
 /**
- * Dummy CPU-intensive task, just calculates N-th prime number
+ * Stateless service which calculates dummy CPU-intensive task
  */
 @Service
 public class ProcessorServiceImpl implements ProcessorService {
