@@ -16,9 +16,9 @@ public class RobotActor extends AbstractActor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final WebSocketSession session;
-    private final Long robotId;
+    private final Integer robotId;
 
-    public RobotActor(WebSocketSession session, Long robotId) {
+    public RobotActor(WebSocketSession session, Integer robotId) {
         this.session = session;
         this.robotId = robotId;
         DistributedPubSub.get(getContext().system())
