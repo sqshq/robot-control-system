@@ -44,6 +44,6 @@ public class ProcessorActor extends AbstractActor {
         int targetRobot = random.nextInt(robotsCount) + 1;
 
         mediator.tell(new DistributedPubSubMediator.Publish(String.valueOf(targetRobot), computedValue), self());
-        sender().tell(targetRobot, self());
+        sender().tell("The task sent to robot #" + targetRobot, self());
     }
 }

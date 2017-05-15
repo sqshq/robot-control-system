@@ -35,6 +35,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         ActorRef actor = (ActorRef) session.getAttributes().get("actor");
         actor.tell(PoisonPill.getInstance(), ActorRef.noSender());
+        robotCount.decrementAndGet();
     }
 
     @Override

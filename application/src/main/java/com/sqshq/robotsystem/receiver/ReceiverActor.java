@@ -13,31 +13,31 @@ import org.springframework.web.context.request.async.DeferredResult;
 public class ReceiverActor extends AbstractActor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final DeferredResult<Integer> deferredResult;
+    private final DeferredResult<String> deferredResult;
 
     @Autowired
     @Qualifier("clusterProcessorRouter")
     private ActorRef router;
 
-    public ReceiverActor(DeferredResult<Integer> deferredResult) {
+    public ReceiverActor(DeferredResult<String> deferredResult) {
         this.deferredResult = deferredResult;
     }
 
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match(String.class, this::dispatch)
-                .match(Integer.class, this::complete)
+                .match(Integer.class, this::dispatch)
+                .match(String.class, this::complete)
                 .matchAny(this::unhandled)
                 .build();
     }
 
-    private void dispatch(String data) {
+    private void dispatch(Integer data) {
         log.info("receiver dispatching the data: {}", data);
-        router.tell(Integer.valueOf(data), self());
+        router.tell(data, self());
     }
 
-    private void complete(Integer result) {
+    private void complete(String result) {
         log.info("receiver responding to sender: {}", result);
         deferredResult.setResult(result);
     }

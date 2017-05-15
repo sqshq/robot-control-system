@@ -19,10 +19,10 @@ public class ReceiverController {
     private ActorSystem system;
 
     @RequestMapping(value = "/sensors/data", method = RequestMethod.POST)
-    private DeferredResult<Integer> receiveSensorsData(@RequestBody String data) {
-        DeferredResult<Integer> result = new DeferredResult<>();
+    private DeferredResult<String> receiveSensorsData(@RequestBody String data) {
+        DeferredResult<String> result = new DeferredResult<>();
         system.actorOf(SpringProps.create(system, ReceiverActor.class, result))
-                .tell(data, ActorRef.noSender());
+                .tell(Integer.valueOf(data), ActorRef.noSender());
         return result;
     }
 }
