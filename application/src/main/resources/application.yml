@@ -9,5 +9,3 @@ logging:
     ROOT: warn
     akka.cluster: info
     com.sqshq: info
-robots:
-    count: ${ROBOTS_COUNT}

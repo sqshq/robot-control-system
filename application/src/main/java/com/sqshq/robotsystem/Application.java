@@ -5,7 +5,6 @@ import akka.actor.ActorSystem;
 import akka.cluster.Cluster;
 import akka.cluster.metrics.AdaptiveLoadBalancingGroup;
 import akka.cluster.metrics.CpuMetricsSelector;
-import akka.cluster.pubsub.DistributedPubSub;
 import akka.cluster.routing.ClusterRouterGroup;
 import akka.cluster.routing.ClusterRouterGroupSettings;
 import akka.routing.RoundRobinPool;
@@ -67,11 +66,6 @@ public class Application {
         return system.actorOf(SpringProps.create(system, ProcessorActor.class)
                 .withDispatcher("processor-dispatcher")
                 .withRouter(new RoundRobinPool(10)), "localProcessorRouter");
-    }
-
-    @Bean("pubSubMediator")
-    public ActorRef pubSubMediator() {
-        return DistributedPubSub.get(system).mediator();
     }
 
     @EnableWebSocket

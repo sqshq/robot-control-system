@@ -26,7 +26,6 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: processor
       WEB_ENVIRONMENT: 'false'
-      ROBOTS_COUNT: 100
 
   transmitter:
     build: application
