@@ -40,5 +40,6 @@ public class ReceiverActor extends AbstractActor {
     private void complete(String result) {
         log.info("receiver responding to sender: {}", result);
         deferredResult.setResult(result);
+        getContext().stop(self());
     }
 }
